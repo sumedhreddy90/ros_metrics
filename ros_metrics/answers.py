@@ -117,8 +117,12 @@ def fetch_questions(db, forward=False):
     new_qs = 0
 
     now = now_epoch()
+    print('now:',now)
     if not forward:
-        last_activity = db.lookup('max(last_activity_at)', 'questions')
+        last_activity = db.lookup_all('max(last_activity_at)', 'questions')
+        last_activity = int(last_activity[0])
+        print(last_activity)
+       
         time_delta = now - last_activity
         bar = tqdm(total=100, desc='answers.ros.org question crawl')
         last_percent = 0
